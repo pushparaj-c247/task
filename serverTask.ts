@@ -62,15 +62,11 @@ readStream.on("data", (chunk2: String) => {
 // Using Duplex stream
 const duplexStream = new Duplex({
   read() {},
-  write(chunk2, encoding, callback) {
+  write(chunk2) {
     const manipulatedChunk = manipulateData(chunk2);
     this.push(manipulatedChunk);
-    callback();
+
   },
 });
 
-const writeStreamDuplex = fs.createWriteStream(outputFilePath);
 
-duplexStream.pipe(writeStreamDuplex);
-
-fs.createReadStream(inputFilePath).pipe(duplexStream);
